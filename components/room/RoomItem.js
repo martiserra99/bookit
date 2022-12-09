@@ -21,7 +21,7 @@ const RoomItem = ({ room }) => {
         </div>
         <div className="card-body d-flex flex-column">
           <h5 className="card-title">
-            <Link href={`/rooms/${room._id}`}>{room.name}</Link>
+            <Link href={`/room/${room._id}`}>{room.name}</Link>
           </h5>
 
           <div className="ratings mt-auto mb-3">
@@ -39,7 +39,7 @@ const RoomItem = ({ room }) => {
           </div>
 
           <button className="btn btn-block view-btn">
-            <Link href={`/rooms/${room._id}`}>View Details</Link>
+            <Link href={`/room/${room._id}`}>View Details</Link>
           </button>
         </div>
       </div>
