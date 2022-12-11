@@ -3,7 +3,7 @@ import Search from "../components/Search";
 
 export default function Index() {
   return (
-    <Layout>
+    <Layout title="Search Rooms">
       <Search />
     </Layout>
   );
