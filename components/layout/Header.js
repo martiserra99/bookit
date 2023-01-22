@@ -3,13 +3,13 @@ import React, { useEffect } from "react";
 import Link from "next/link";
 
 import { useDispatch, useSelector } from "react-redux";
-import { loadUser } from "../../redux/actions/userActions";
 import { signOut } from "next-auth/react";
+
+import { loadUser } from "../../redux/actions/userActions";
 
 const Header = () => {
   const dispatch = useDispatch();
-
-  const { user, loading } = useSelector((state) => state.loadedUser);
+  const { loading, user } = useSelector((state) => state.loadedUser);
 
   useEffect(() => {
     if (!user) {
