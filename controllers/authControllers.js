@@ -34,7 +34,7 @@ const registerUser = catchAsyncErrors(async (req, res) => {
 });
 
 const currentUserProfile = catchAsyncErrors(async (req, res) => {
-  const user = await User.findById(req.user._id);
+  const user = await User.findOne({ email: req.user.email });
 
   res.status(200).json({
     success: true,
