@@ -12,19 +12,19 @@ import { toast } from "react-toastify";
 
 import {
   getAdminBookings,
-  // deleteBooking,
+  deleteBooking,
   clearErrors,
 } from "../../redux/actions/bookingActions";
-// import { DELETE_BOOKING_RESET } from "../../redux/constants/bookingConstants";
+import { DELETE_BOOKING_RESET } from "../../redux/constants/bookingConstants";
 
 const AllBookings = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
   const { bookings, error, loading } = useSelector((state) => state.bookings);
-  // const { isDeleted, error: deleteError } = useSelector(
-  //   (state) => state.booking
-  // );
+  const { isDeleted, error: deleteError } = useSelector(
+    (state) => state.booking
+  );
 
   useEffect(() => {
     dispatch(getAdminBookings());
@@ -34,16 +34,16 @@ const AllBookings = () => {
       dispatch(clearErrors());
     }
 
-    // if (deleteError) {
-    //   toast.error(deleteError);
-    //   dispatch(clearErrors());
-    // }
+    if (deleteError) {
+      toast.error(deleteError);
+      dispatch(clearErrors());
+    }
 
-    // if (isDeleted) {
-    //   router.push("/admin/bookings");
-    //   dispatch({ type: DELETE_BOOKING_RESET });
-    // }
-  }, [dispatch, /*deleteError, isDeleted,*/ error, router]);
+    if (isDeleted) {
+      router.push("/admin/bookings");
+      dispatch({ type: DELETE_BOOKING_RESET });
+    }
+  }, [dispatch, deleteError, isDeleted, error, router]);
 
   const setBookings = () => {
     const data = {

@@ -155,6 +155,21 @@ const allAdminBookings = catchAsyncErrors(async (req, res) => {
   });
 });
 
+// Delete booking - ADMIN   =>   /api/admin/bookings/id
+const deleteBooking = catchAsyncErrors(async (req, res, next) => {
+  const booking = await Booking.findById(req.query.id);
+
+  if (!booking) {
+    return next(new ErrorHandler("Booking not found with this ID", 400));
+  }
+
+  await booking.remove();
+
+  res.status(200).json({
+    success: true,
+  });
+});
+
 export {
   newBooking,
   checkRoomBookingAvailability,
@@ -162,4 +177,5 @@ export {
   myBookings,
   getBookingDetails,
   allAdminBookings,
+  deleteBooking,
 };
