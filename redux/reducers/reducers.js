@@ -36,6 +36,7 @@ const reducers = combineReducers({
   bookingDetails: bookingDetailsReducer,
   newReview: newReviewReducer,
   checkReview: checkReviewReducer,
+  bookings: bookingsReducer,
 });
 
 export default reducers;

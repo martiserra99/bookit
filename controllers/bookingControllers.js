@@ -137,10 +137,29 @@ const getBookingDetails = catchAsyncErrors(async (req, res) => {
   });
 });
 
+// Get all bookings - ADMIN   =>   /api/admin/bookings
+const allAdminBookings = catchAsyncErrors(async (req, res) => {
+  const bookings = await Booking.find()
+    .populate({
+      path: "room",
+      select: "name pricePerNight images",
+    })
+    .populate({
+      path: "user",
+      select: "name email",
+    });
+
+  res.status(200).json({
+    success: true,
+    bookings,
+  });
+});
+
 export {
   newBooking,
   checkRoomBookingAvailability,
   checkBookedDatesOfRoom,
   myBookings,
   getBookingDetails,
+  allAdminBookings,
 };
