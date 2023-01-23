@@ -6,8 +6,8 @@ import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import {
   newReview,
-  // checkReviewAvailability,
-  // clearErrors,
+  checkReviewAvailability,
+  clearErrors,
 } from "../../redux/actions/roomActions";
 import { NEW_REVIEW_RESET } from "../../redux/constants/roomConstants";
 
@@ -19,27 +19,27 @@ const NewReview = () => {
   const router = useRouter();
 
   const { error, success } = useSelector((state) => state.newReview);
-  // const { reviewAvailable } = useSelector((state) => state.checkReview);
+  const { reviewAvailable } = useSelector((state) => state.checkReview);
 
   const { id } = router.query;
 
-  // useEffect(() => {
-  //   if (id !== undefined) {
-  //     dispatch(checkReviewAvailability(id));
-  //   }
+  useEffect(() => {
+    if (id !== undefined) {
+      dispatch(checkReviewAvailability(id));
+    }
 
-  //   if (error) {
-  //     toast.error(error);
-  //     dispatch(clearErrors());
-  //   }
+    if (error) {
+      toast.error(error);
+      dispatch(clearErrors());
+    }
 
-  //   if (success) {
-  //     toast.success("Review is posted.");
-  //     dispatch({ type: NEW_REVIEW_RESET });
+    if (success) {
+      toast.success("Review is posted.");
+      dispatch({ type: NEW_REVIEW_RESET });
 
-  //     router.push(`/room/${id}`);
-  //   }
-  // }, [dispatch, success, error, id]);
+      router.push(`/room/${id}`);
+    }
+  }, [dispatch, success, error, id, router]);
 
   const submitHandler = () => {
     const reviewData = {
@@ -91,18 +91,18 @@ const NewReview = () => {
 
   return (
     <>
-      {/* {reviewAvailable && ( */}
-      <button
-        id="review_btn"
-        type="button"
-        className="btn btn-primary mt-4 mb-5"
-        data-toggle="modal"
-        data-target="#ratingModal"
-        onClick={setUserRatings}
-      >
-        Submit Your Review
-      </button>
-      {/* )} */}
+      {reviewAvailable && (
+        <button
+          id="review_btn"
+          type="button"
+          className="btn btn-primary mt-4 mb-5"
+          data-toggle="modal"
+          data-target="#ratingModal"
+          onClick={setUserRatings}
+        >
+          Submit Your Review
+        </button>
+      )}
       <div
         className="modal fade"
         id="ratingModal"
