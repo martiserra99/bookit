@@ -6,6 +6,8 @@ module.exports = {
       "pk_test_51MS2hcFzoMTg0nHRwnotCx8KEPSSWKsazzTI6er2Q251BhhLrtcrKhXPQ4rUF5Sxn5iAJGL6tbbmWgl5pVFwbMeB00EDaXrqFZ",
     STRIPE_SECRET_KEY:
       "sk_test_51MS2hcFzoMTg0nHRc9qj9cMkqtCp8wIlm9ZcT5wQVp1TKq5zQKVZZc2tgrJrWweGPUbiBcRZqmBIGSOTNXe4IUV500F7arbB7R",
+    STRIPE_WEBHOOK_SECRET:
+      "whsec_3c27e9df1886f6bdb1d73a1a1a4c9ba1e91780bf8eff41a6dc910efdb0887a21",
 
     CLOUDINARY_CLOUD_NAME: "dbeyagjpm",
     CLOUDINARY_API_KEY: "711743527876921",
