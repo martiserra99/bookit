@@ -6,6 +6,7 @@ import {
   updateRoom,
   deleteRoom,
 } from "../../../controllers/roomControllers";
+import { authorizeRoles, isAuthenticatedUser } from "../../../middlewares/auth";
 
 import onError from "../../../middlewares/errors";
 
@@ -15,8 +16,8 @@ dbConnect();
 
 handler.get(getSingleRoom);
 
-handler.put(updateRoom);
+handler.use(isAuthenticatedUser, authorizeRoles("admin")).put(updateRoom);
 
-handler.delete(deleteRoom);
+handler.use(isAuthenticatedUser, authorizeRoles("admin")).delete(deleteRoom);
 
 export default handler;
