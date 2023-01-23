@@ -8,17 +8,15 @@ import Loader from "../layout/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-import {
-  getAdminRooms /*, deleteRoom*/,
-} from "../../redux/actions/roomActions";
-// import { DELETE_ROOM_RESET } from "../../redux/constants/roomConstants";
+import { getAdminRooms, deleteRoom } from "../../redux/actions/roomActions";
+import { DELETE_ROOM_RESET } from "../../redux/constants/roomConstants";
 
 const AllRooms = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
   const { loading, error, rooms } = useSelector((state) => state.allRooms);
-  // const { error: deleteError, isDeleted } = useSelector((state) => state.room);
+  const { error: deleteError, isDeleted } = useSelector((state) => state.room);
 
   useEffect(() => {
     dispatch(getAdminRooms());
@@ -28,16 +26,16 @@ const AllRooms = () => {
       dispatch(clearErrors());
     }
 
-    // if (deleteError) {
-    //   toast.error(deleteError);
-    //   dispatch(clearErrors());
-    // }
+    if (deleteError) {
+      toast.error(deleteError);
+      dispatch(clearErrors());
+    }
 
-    // if (isDeleted) {
-    //   router.push("/admin/rooms");
-    //   dispatch({ type: DELETE_ROOM_RESET });
-    // }
-  }, [dispatch, /*deleteError, isDeleted, */ error, router]);
+    if (isDeleted) {
+      router.push("/admin/rooms");
+      dispatch({ type: DELETE_ROOM_RESET });
+    }
+  }, [dispatch, deleteError, isDeleted, error, router]);
 
   const setRooms = () => {
     const data = {
@@ -102,7 +100,7 @@ const AllRooms = () => {
   };
 
   const deleteRoomHandler = (id) => {
-    // dispatch(deleteRoom(id));
+    dispatch(deleteRoom(id));
   };
 
   return (
