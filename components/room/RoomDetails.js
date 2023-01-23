@@ -11,6 +11,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { checkBooking } from "../../redux/actions/bookingActions";
+import { CHECK_BOOKING_RESET } from "../../redux/constants/bookingConstants";
+import { getBookedDates } from "../../redux/actions/bookingActions";
 
 const RoomDetails = () => {
   const router = useRouter();
@@ -19,11 +21,14 @@ const RoomDetails = () => {
   const [daysOfStay, setDaysOfStay] = useState();
 
   const dispatch = useDispatch();
+  const { dates } = useSelector((state) => state.bookedDates);
   const { user } = useSelector((state) => state.loadedUser);
   const { room, error } = useSelector((state) => state.roomDetails);
   const { available, loading: bookingLoading } = useSelector(
     (state) => state.checkBooking
   );
+
+  const excludedDates = dates.map((date) => new Date(date));
 
   useEffect(() => {
     toast.error(error);
@@ -65,6 +70,17 @@ const RoomDetails = () => {
       console.log(error.response);
     }
   };
+
+  useEffect(() => {
+    dispatch(getBookedDates(id));
+
+    toast.error(error);
+    dispatch(clearErrors());
+
+    return () => {
+      dispatch({ type: CHECK_BOOKING_RESET });
+    };
+  }, [dispatch, id, error]);
 
   return (
     <>
@@ -134,6 +150,8 @@ const RoomDetails = () => {
                 onChange={onChange}
                 startDate={checkInDate}
                 endDate={checkOutDate}
+                minDate={new Date()}
+                excludeDates={excludedDates}
                 selectsRange
                 inline
               />
@@ -159,19 +177,12 @@ const RoomDetails = () => {
               {available && user && (
                 <button
                   className="btn btn-block py-3 booking-btn"
-                  onClick={() => bookRoom(room._id, room.pricePerNight)}
+                  onClick={newBookingHandler}
                   disabled={bookingLoading ? true : false}
                 >
                   Pay - ${daysOfStay * room.pricePerNight}
                 </button>
               )}
-
-              <button
-                className="btn btn-block py-3 booking-btn"
-                onClick={newBookingHandler}
-              >
-                Pay
-              </button>
             </div>
           </div>
         </div>

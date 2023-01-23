@@ -1,6 +1,11 @@
 import catchAsyncErrors from "../middlewares/catchAsyncErrors";
 import Booking from "../models/booking";
 
+import Moment from "moment";
+import { extendMoment } from "moment-range";
+
+const moment = extendMoment(Moment);
+
 const newBooking = catchAsyncErrors(async (req, res) => {
   const {
     room,
@@ -19,6 +24,7 @@ const newBooking = catchAsyncErrors(async (req, res) => {
     daysOfStay,
     amountPaid,
     paymentInfo,
+    paidAt: Date.now(),
   });
 
   res.status(200).json({
@@ -64,4 +70,35 @@ const checkRoomBookingAvailability = catchAsyncErrors(async (req, res) => {
   });
 });
 
-export { newBooking, checkRoomBookingAvailability };
+const checkBookedDatesOfRoom = catchAsyncErrors(async (req, res) => {
+  const { roomId } = req.query;
+
+  const bookings = await Booking.find({ room: roomId });
+
+  let bookedDates = [];
+
+  const timeDiffernece = moment().utcOffset() / 60;
+
+  bookings.forEach((booking) => {
+    const checkInDate = moment(booking.checkInDate).add(
+      timeDiffernece,
+      "hours"
+    );
+    const checkOutDate = moment(booking.checkOutDate).add(
+      timeDiffernece,
+      "hours"
+    );
+
+    const range = moment.range(moment(checkInDate), moment(checkOutDate));
+
+    const dates = Array.from(range.by("day"));
+    bookedDates = bookedDates.concat(dates);
+  });
+
+  res.status(200).json({
+    success: true,
+    bookedDates,
+  });
+});
+
+export { newBooking, checkRoomBookingAvailability, checkBookedDatesOfRoom };
