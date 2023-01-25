@@ -13,6 +13,7 @@ import {
   loadedUserReducer,
   userReducer,
   forgotPasswordReducer,
+  allUsersReducer,
 } from "./userReducers";
 import {
   checkBookingReducer,
@@ -39,6 +40,7 @@ const reducers = combineReducers({
   checkReview: checkReviewReducer,
   bookings: bookingsReducer,
   booking: bookingReducer,
+  allUsers: allUsersReducer,
 });
 
 export default reducers;
