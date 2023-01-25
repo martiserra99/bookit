@@ -10,17 +10,17 @@ import { toast } from "react-toastify";
 
 import {
   getAdminUsers,
-  // deleteUser,
+  deleteUser,
   clearErrors,
 } from "../../redux/actions/userActions";
-// import { DELETE_USER_RESET } from "../../redux/constants/userConstants";
+import { DELETE_USER_RESET } from "../../redux/constants/userConstants";
 
 const AllUsers = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
   const { loading, error, users } = useSelector((state) => state.allUsers);
-  // const { error: deleteError, isDeleted } = useSelector((state) => state.user);
+  const { error: deleteError, isDeleted } = useSelector((state) => state.user);
 
   useEffect(() => {
     dispatch(getAdminUsers());
@@ -30,16 +30,16 @@ const AllUsers = () => {
       dispatch(clearErrors());
     }
 
-    // if (deleteError) {
-    //   toast.error(deleteError);
-    //   dispatch(clearErrors());
-    // }
+    if (deleteError) {
+      toast.error(deleteError);
+      dispatch(clearErrors());
+    }
 
-    // if (isDeleted) {
-    //   router.push("/admin/users");
-    //   dispatch({ type: DELETE_USER_RESET });
-    // }
-  }, [dispatch, error /*, isDeleted*/]);
+    if (isDeleted) {
+      router.push("/admin/users");
+      dispatch({ type: DELETE_USER_RESET });
+    }
+  }, [dispatch, error, isDeleted, router, deleteError]);
 
   const setUsers = () => {
     const data = {
@@ -104,7 +104,7 @@ const AllUsers = () => {
   };
 
   const deleteUserHandler = (id) => {
-    // dispatch(deleteUser(id));
+    dispatch(deleteUser(id));
   };
 
   return (
