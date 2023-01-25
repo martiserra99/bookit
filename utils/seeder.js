@@ -4,10 +4,13 @@ const mongoose = require("mongoose");
 const rooms = require("../data/rooms");
 
 mongoose
-  .connect("mongodb://localhost:27017/bookit", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(
+    "mongodb+srv://marti:MeDHsKXrNpvdmyZ7@cluster0.ooeshmn.mongodb.net/bookit?retryWrites=true&w=majority",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
   .then(() => console.log("Connected to local database"));
 
 const seedRooms = async () => {

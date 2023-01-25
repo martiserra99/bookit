@@ -1,13 +1,14 @@
 module.exports = {
   env: {
     DB_LOCAL_URI: "mongodb://localhost:27017/bookit",
+    DB_URI:
+      "mongodb+srv://marti:123456789@cluster0.ooeshmn.mongodb.net/bookit?retryWrites=true&w=majority",
 
     STRIPE_API_KEY:
       "pk_test_51MS2hcFzoMTg0nHRwnotCx8KEPSSWKsazzTI6er2Q251BhhLrtcrKhXPQ4rUF5Sxn5iAJGL6tbbmWgl5pVFwbMeB00EDaXrqFZ",
     STRIPE_SECRET_KEY:
       "sk_test_51MS2hcFzoMTg0nHRc9qj9cMkqtCp8wIlm9ZcT5wQVp1TKq5zQKVZZc2tgrJrWweGPUbiBcRZqmBIGSOTNXe4IUV500F7arbB7R",
-    STRIPE_WEBHOOK_SECRET:
-      "whsec_3c27e9df1886f6bdb1d73a1a1a4c9ba1e91780bf8eff41a6dc910efdb0887a21",
+    STRIPE_WEBHOOK_SECRET: "whsec_Fc6HyoEnmM9S7Rg9QEPLDhx399VqFvQr",
 
     CLOUDINARY_CLOUD_NAME: "dbeyagjpm",
     CLOUDINARY_API_KEY: "711743527876921",
@@ -19,6 +20,8 @@ module.exports = {
     SMTP_PASSWORD: "6c8c4491b6b35c",
     SMTP_FROM_NAME: "BookIT",
     SMTP_FROM_EMAIL: "noreply@bookit.com",
+
+    NEXTAUTH_URL: "https://bookit-martiserra.vercel.app",
   },
   images: {
     domains: ["images.unsplash.com", "res.cloudinary.com"],
